@@ -1,0 +1,1 @@
+pyinstaller xToWebpConverter.py --onefile
