@@ -28,16 +28,20 @@ def select_file2():
     print(f"Selected file: {filepath}")
 
 
-def convert_to_webp(source):
+def convert_to_webp(source, destination=None):
     """Convert image to WebP.
 
     Args:
         source (pathlib.Path): Path to source image
+        destination (pathlib.Path): Path to Folder
 
     Returns:
         pathlib.Path: path to new image
     """
-    destination = source.with_suffix(".webp")
+    if destination is None:
+        destination = source.with_suffix(".webp")
+    elif destination.is_dir():
+        destination = destination / source.name
 
     image = Image.open(source)  # Open image
     image.save(destination, format="webp")  # Convert image to webp
@@ -51,7 +55,7 @@ def generate_webp():
         file_label.config(text=path.name)
         progress["value"] = (i / len(paths)) * 100
         root.update()
-        webp_path = convert_to_webp(path)
+        webp_path = convert_to_webp(path, Path(filepath_label2.cget('text')))
         print(webp_path)
     progress["value"] = 100
     root.update()
