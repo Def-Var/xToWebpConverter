@@ -42,6 +42,7 @@ def convert_to_webp(source, destination=None):
         destination = source.with_suffix(".webp")
     elif destination.is_dir():
         destination = destination / source.name
+        destination = destination.with_suffix(".webp")
 
     image = Image.open(source)  # Open image
     image.save(destination, format="webp")  # Convert image to webp
